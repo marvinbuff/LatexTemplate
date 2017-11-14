@@ -3,6 +3,16 @@
 *.aux
 *.log
 *.out
+*.toc
 
 ## Compiled files
 *.pdf
+
+
+## Build tool auxiliary files:
+*.synctex.gz
+
+
+## Beamer
+*.nav
+*.snm
