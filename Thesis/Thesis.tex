@@ -1,0 +1,113 @@
+%% ----------------------------------------------------------------
+%% Thesis.tex -- main
+%% ----------------------------------------------------------------
+
+\documentclass[a4paper, 10pt, oneside]{memoir}
+\usepackage{basilea}
+
+%% ---------------------------------------------------------------
+%  Imports
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{tikz}
+\usepackage{longtable}
+\usepackage{placeins}
+\usepackage[width=.75\textwidth]{caption}
+
+\usetikzlibrary{positioning,fit,shapes.geometric,backgrounds}
+
+% Custom Makros
+\newcommand{\tup}[2]{\ensuremath{\langle #1, #2 \rangle}}
+\newcommand{\forceindent}{\leavevmode{\parindent=1em\indent}}
+
+% This command is used to include figures.
+\newcommand{\fig}[2]{%
+\begin{figure}[ht] 
+    \centering
+    \resizebox{0.8\textwidth}{!}{%
+        \input{./Figures/tikz/#1.tex}
+    }
+    \caption{#2}
+    \label{fig:#1}
+\end{figure}
+}
+
+% The following are style definitions for tikz
+\tikzstyle{base node} = [draw, inner sep=0.5pt, outer sep=0.2pt, draw=black, text=black]
+\tikzstyle{node} = [base node, circle, minimum size=20pt]
+\tikzstyle{goal} = [node, double, double distance=1.0pt]
+\tikzstyle{start} = [base node, inner sep=6pt]
+\tikzstyle{arrow} = [->]
+% End of style definitions
+
+% Math Commands
+\DeclareMathOperator{\pre}{\mathit{pre}}
+
+
+%% ----------------------------------------------------------------
+
+\title				{Solving Delete-Relaxed Planning Tasks by Using Cut Sets}
+\thesistype			{Bachelor Thesis}
+
+\department 		{Department of Mathematics and Computer Science}
+\faculty			{Natural Science Faculty of the University of Basel}
+\research		{Artificial Intelligence \\ http://ai.cs.unibas.ch}
+
+\supervisor  		{Dr. Thomas Keller and Cedric Geissmann}
+\examiner    		{Prof. Dr. Malte Helmert}
+
+\authors     		{Marvin Buff}
+\email				{marvin.buff@unibas.ch}
+\immatriculnr		{2014-054-191}
+
+\date				{13/06/2017}
+
+\ulogo				{Template/logo-en}
+
+
+%% ----------------------------------------------------------------
+\begin{document}
+
+% \selectlanguage{ngerman}
+\selectlanguage{english}
+
+
+%% ----------------------------------------------------------------
+%  Commands
+
+\def\someCommand#1#2{Args are #1 and #2}
+
+\newtheorem{bgDef}{Definition} %to use in definitions
+\nocite{*}
+
+\thesisfront
+\maketitle
+\pagestyle{thesis}
+%% ----------------------------------------------------------------
+\input{./Front/Acknowledgment}
+%% ----------------------------------------------------------------
+\input{./Front/Abstract}
+%% ----------------------------------------------------------------
+\thesistoc
+%% ----------------------------------------------------------------
+%\thesisnomencl
+%% ----------------------------------------------------------------
+\thesismain
+\input{./Chapters/Chapter1}
+\input{./Chapters/Chapter2}
+\input{./Chapters/Chapter3}
+\input{./Chapters/Chapter4}
+\input{./Chapters/Chapter5}
+%% ----------------------------------------------------------------
+\thesisappendix
+\thesisbib
+%\begin{appendices}
+%	\input{./Back/AppendixResults}
+%\end{appendices}
+%% ----------------------------------------------------------------
+\thesisback
+\input{./Back/DeclarationOfAuthorship}
+%% ----------------------------------------------------------------
+\end{document}
+%% ----------------------------------------------------------------
