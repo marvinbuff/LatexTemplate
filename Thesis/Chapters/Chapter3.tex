@@ -1,0 +1,26 @@
+\chapter{Flow-Cut Algorithm}\label{cha:flowCut}
+
+\begin{algorithm}
+\begin{algorithmic}
+\caption{Flow-Cut Algorithm}\label{alg:flowCut}
+\Procedure{Flow-Cut}{P}\Comment{Solves the planning problem P}
+\State $cg \gets$ \Call{deriveCausalGraph}{P}
+\State $\langle$l,c,r$\rangle \gets$ \Call{makeInitialCut}{cg}\Comment{3-tuple of
+sub-graphs,$\langle left,cut,right\rangle$}
+\State $minimal \gets false$
+\While{not $minimal$}
+\State $minimal \gets$ \Call{shrinkCut}{$\langle$l,c,r$\rangle$}\Comment{Hill
+climbing algorithm}
+\EndWhile
+\State \textbf{return} \Call{createSolveProblems}{subset,l,r,P}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{equation}
+\begin{aligned}
+0(\langle left,cut,right\rangle) &= 2^C * 2^{|left|+|cut|} + 2^C * 2^{|right|+|cut|}\\
+&= 2^{C+|left|+|cut|} + 2^{C+|right|+|cut|},
+\end{aligned}
+\end{equation}
