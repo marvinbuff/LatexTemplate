@@ -1,0 +1,184 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{diagbox}
+\usepackage{tgtermes}
+
+\usepackage[
+pdftitle={Distributed Systems -- Exercise 3}, 
+pdfauthor={Jonathan Aellen, Marvin Buff},
+colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue,bookmarks=true,
+bookmarksopenlevel=2]{hyperref}
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{tikz}
+\usetikzlibrary{positioning,fit,shapes.geometric,backgrounds}
+
+% The following are style definitions
+\tikzstyle{base node} = [draw, inner sep=0.5pt, outer sep=0.2pt, draw=black,
+                        text=black]
+\tikzstyle{node} = [base node, circle, minimum size=20pt]
+\tikzstyle{arrow} = [->]
+% End of style definitions
+
+\usepackage{geometry}
+\geometry{total={210mm,297mm},
+left=25mm,right=25mm,%
+bindingoffset=0mm, top=20mm,bottom=20mm}
+
+
+\linespread{1.3}
+
+\newcommand{\linia}{\rule{\linewidth}{0.5pt}}
+\newcommand{\shellcmd}[1]{\\\indent\indent\texttt{\footnotesize\# #1}\\}
+
+% custom theorems if needed
+\newtheoremstyle{mytheor}
+    {1ex}{1ex}{\normalfont}{0pt}{\scshape}{.}{1ex}
+    {{\thmname{#1 }}{\thmnumber{#2}}{\thmnote{ (#3)}}}
+    
+% This command is used to include figures.
+% For more information go to Figures/tikz/README.md
+\newcommand{\fig}[2]{%
+\begin{figure}[ht] % t specifies the position on the page. Top should be default
+    \centering
+    \input{./Figures/tikz/#1.tex}
+    \caption{#2}
+    \label{fig:#1}
+\end{figure}
+}
+
+\theoremstyle{mytheor}
+\newtheorem{defi}{Definition}
+
+% my own titles
+\makeatletter
+\renewcommand{\maketitle}{
+\begin{center}
+\vspace{2ex}
+{\huge \textsc{\@title}}
+\vspace{1ex}
+\\
+\linia\\
+\@author \hfill \@date
+\vspace{4ex}
+\end{center}
+}
+\makeatother
+%%%
+
+% custom footers and headers
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{Exercise \textnumero{} 3}
+\cfoot{}
+\rfoot{Page \thepage\ /\ \pageref*{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+%
+
+%%%----------%%%----------%%%----------%%%----------%%%
+
+\begin{document}
+
+\title{Distributed Systems -- Exercise 3}
+
+\author{Jonathan Aellen, Marvin Buff}
+
+\date{\today}
+
+\maketitle
+
+\section*{Task 1 -- Matrix Summation in OpenMP}
+
+\subsection*{a)}
+See the \emph{sum.c} file.
+
+\subsection*{b)}
+Single node, multi core systems. The executed threads share the same memory and process. We use a shared memory paradigm with a data parallelism.
+
+\subsection*{c)}
+The threads and the arrays are in the shared memory. The threads work on the same array.
+
+\subsection*{d)}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{l||l|l|l|l}
+\diagbox{Columns}{Threads} & 5        & 10       & 20       & 40        \\ \hline \hline
+200 & 0.000334 s & 0.000221 s & 0.000348 s & 0.004630 s \\ \hline
+300                             & 0.000351 s & 0.000281 s & 0.000370 s & 0.005368 s \\ \hline
+400                             & 0.000865 s & 0.000386 s & 0.000458 s & 0.005621 s
+\end{tabular}
+\caption{Our perfectly computed solutions with our superior script. (For exercise 1d)}
+\end{table}
+
+The runtime we measured was fluctuating. Sometimes the script would have twice the runtime with the same arguments. Therefore, we are not sure whether our data is reliable. Anyhow, we found the following attributes: First, the bigger the table is, the more time the program needs. Second, we got the shortest runtime with ten threads. We interpret this as the point where the speed gain from the parallelization outweighs the overhead resulting from creating and organizing threads. Third, using forty threads is so much worse than any other configuration. We think the problem is that we are having more threads than cores and with that we make the organization and distribution of the performance much more complicated.
+
+\section*{Task 2 -- Matrix Summation in MPI}
+\subsection*{a)}
+We have to establish the different processes (1 Master, x Slave). Next, we have to write specific code for the master and the slaves. The master has to divide the data and send it to all slaves. Additionally, he has his own share to work, and at last, he receives the result from the slaves and combines it. The slaves wait for the input of the master and then do their computation. When finished they send the result back.
+
+\subsection*{b)}
+See the \emph{mpi\_matrix\_sum.c} file.
+
+\subsection*{c)}
+Physically distributed systems with a distributed-memory architecture. It targets computation problems with a coarse data granularity. In our opinion this is why our results are slower in MPI than OMP.
+
+\subsection*{d)}
+\begin{table}[h!]
+\centering
+\begin{tabular}{l||l|l|l|l}
+\diagbox{Columns}{Processes} & 2        & 3       & 4        \\ \hline \hline
+200  & 0.001611 s & 0.001749 s & 0.002013 s  \\ \hline
+300  & 0.002067 s & 0.002157 s & 0.002580 s  \\ \hline
+400  & 0.002478 s & 0.002582 s & 0.002758 s
+\end{tabular}
+\caption{Our next perfectly computed solutions with our even more superior script. (For exercise 2d)}
+\end{table}
+Again, the more columns we have, the longer it takes. This is a linear relation. For this small computation the more processes we have to synchronize, the longer it takes. In this computation, where all the matrix buffers need to synchronized (send, received) between the processes, there is no advantage so far to use more processes as the overhead outweighs the increased computation power.
+
+As a remark: we used a node for each process.
+
+\section*{Task 3 -- Matrix Summation with Hybrid MPI/ OpenMP}
+\subsection*{a)}
+We use the same approach as in the \emph{Open-MPI} section. The only difference is, we parallelize the computation of the matrix $c$. For this we use again \emph{OMP} for the \textsc{for} loop as we have done in the first part of this exercise.
+
+\subsection*{b)}
+See the \emph{hybrid.c} file.
+
+\subsection*{c)}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{l||l|l|l|l}
+\diagbox{Columns}{Processes} & 2        & 3       & 4        \\ \hline \hline
+200  & 0.002011 s & 0.002211 s & 0.002468 s  \\ \hline
+300  & 0.002405 s & 0.002542 s & 0.002744 s  \\ \hline
+400  & 0.002547 s & 0.002662 s & 0.003066 s
+\end{tabular}
+\caption{Our next perfectly computed solutions with the currently best script. (For exercise 3c) It uses always 40 threads.}
+\end{table}
+
+We measured the same tendencies as in the previous exercises. The results from the second exercise plus the sudden decrease in efficiency using 40 \emph{OMP} threads as seen in the first exercise.
+
+\section*{Remarks}
+We have for exercise 2 and 3, some other runs, results and therefore also explanations. We would be happy to discuss them in the upcoming exercise slot.
+
+
+\end{document}
+
+
+
+
+
+
+
+

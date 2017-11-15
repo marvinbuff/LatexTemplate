@@ -12,6 +12,8 @@
 ## Build tool auxiliary files:
 *.synctex.gz
 
+## nomencl
+*.nlo
 
 ## Beamer
 *.nav
