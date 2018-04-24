@@ -6,9 +6,11 @@
 \usepackage{tikz}
 \usepackage{lcg}
 
-\usetheme{Frankfurt}
+\usetheme{Frankfurt} % Theme with top navigation
+%\usetheme{Madrid} % Theme with bottom information bar
 
 \setbeamertemplate{navigation symbols}{} % Turn off navigation symbols.
+\setbeamertemplate{footline}[page number] % Shows page number at the bottom right corner
 \graphicspath{{Figures/}}
 
 %Presentation Specific
@@ -26,6 +28,10 @@
     \tableofcontents[currentsection]
   \end{frame}
 }
+
+%custom commands
+\newcommand{\light}[1]{\textcolor{gray}{#1}} % adds the command light to gray out text.
+
 
 
 %----------------------------Begin Document----------------------------%
