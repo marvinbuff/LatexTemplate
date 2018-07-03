@@ -1,9 +1,9 @@
 \chapter{Flow-Cut Algorithm}\label{cha:flowCut}
 
 \begin{algorithm}
-\begin{algorithmic}
+\begin{algorithmic}[1]
 \caption{Flow-Cut Algorithm}\label{alg:flowCut}
-\Procedure{Flow-Cut}{P}\Comment{Solves the planning problem P}
+\Procedure{Flow-Cut}{P}\Comment{This part is not essential.}
 \State $cg \gets$ \Call{deriveCausalGraph}{P}
 \State $\langle$l,c,r$\rangle \gets$ \Call{makeInitialCut}{cg}\Comment{3-tuple of
 sub-graphs,$\langle left,cut,right\rangle$}
@@ -12,7 +12,7 @@ sub-graphs,$\langle left,cut,right\rangle$}
 \State $minimal \gets$ \Call{shrinkCut}{$\langle$l,c,r$\rangle$}\Comment{Hill
 climbing algorithm}
 \EndWhile
-\State \textbf{return} \Call{createSolveProblems}{subset,l,r,P}
+\State \Return \Call{createSolveProblems}{subset,l,r,P}
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
