@@ -1,10 +1,18 @@
 %----------------------------Meta Data----------------------------%
-\documentclass{beamer}
+\documentclass[xcolor=dvipsnames]{beamer} % xcolor for all colors
 
 %Packages
 \usepackage{pgfpages}
 \usepackage{tikz}
-\usepackage{lcg}
+%\usepackage{lcg}
+
+% Packages for Algorithm
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% Packages for Tables
+\usepackage{booktabs} % For table commands
+\usepackage{multirow} % For multirow
 
 \usetheme{Frankfurt} % Theme with top navigation
 %\usetheme{Madrid} % Theme with bottom information bar
@@ -14,23 +22,32 @@
 \graphicspath{{Figures/}}
 
 %Presentation Specific
-\title{How Many Guards in the Gallery?}
+\title{Beamer Template}
 %\subtitle{Optional Subtitle}
 \author{Marvin Buff}
 \institute{University of Basel}
-\date{Recreational Science, 2017}
+\date{13. February, 2017}
 
 %Adds the navigation before every new section.
 \AtBeginSection[]
 {
-  \begin{frame}
-    \frametitle{Table of Contents}
-    \tableofcontents[currentsection]
+  % Alternative Content between Chapters
+  %\begin{frame}
+  %  \frametitle{Table of Contents}
+  %  \tableofcontents[currentsection]
+  %\end{frame}
+  
+  \begin{frame}{Outline}
+    \begin{center}
+      \Huge \insertsection
+    \end{center}
   \end{frame}
 }
 
-%custom commands
+% Custom Makros
 \newcommand{\light}[1]{\textcolor{gray}{#1}} % adds the command light to gray out text.
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}} % sets gap between rows, use \ra{1.3}
+\newcommand{\sbc}{\setbeamercovered{transparent}}
 
 
 
@@ -48,51 +65,111 @@
 \end{frame}
 
 
-%-------------Section::One-----------------%
-\section{First Section}
-\subsection{First Subsection}%This add bullet on navigation
+% Insert your Presentation HERE!
+% Insert your Presentation HERE!
+% Insert your Presentation HERE!
 
-%-------------Frame::Graphic---------------%
-\begin{frame}{Setting}
-    \begin{block}{Include Graphic}
-        \includegraphics[width=1\textwidth]{guard} 
-    \end{block}   
+
+%-------------Section::Template-----------------%
+\section{Example Section}
+\subsection{Animation}%This adds a bullet on the navigation bar
+
+\begin{frame}{Animation}
+  \sbc{}
+  \begin{block}{A basic block}<1->
+    Another way to animate would be with: \textsc{\textbackslash{}pause}
+  \end{block}
+  \begin{exampleblock}{An exampleblock}<2->
+    Or alternatively: \textsc{\textbackslash{}onslide<1-2>}
+  \end{exampleblock}
+  \begin{alertblock}{An alertblock}<3>
+    But don't forget to set the beamer cover: \textsc{\textbackslash{}sbc}
+  \end{alertblock}
 \end{frame}
 
-\subsection{Second Subsection}
+\subsection{Table}
+
+\begin{frame}{Table}
+  \begin{block}{Complex table}
+    \begin{table}[H]\centering
+      \ra{1.3}
+      \begin{tabular}{l|c|cccc}
+        % Title Row 1
+        \multicolumn{1}{c}{Domain}& & \multicolumn{4}{c}{Solved Problems (\#)} \\ [0.5ex]
+        \cmidrule(r){3-6}
+        % Title Row 2
+          & Algo & $h^0$ & $h^{max}$ & $h^m$ & $h^{lmCut}$ \\
+        \toprule
+        % Data Rows
+        \multirow{2}{*}{Storage} & $A^*$ & \textbf{14} & \textbf{15} & \textbf{7} & \textbf{15} \\
+          & \textsc{NBS} & 5 & 5 & 2 & 4 \\ 
+        \bottomrule
+      \end{tabular} 
+    \end{table}
+  \end{block}
+  \begin{block}{Necessary Packages}
+    \begin{itemize}
+      \item booktabs %for table
+      \item multirow %for multirow duhh..
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\subsection{Graphics}
 
 %-------------Frame::Tikz-----------------%
 \begin{frame}{Split Columns}
     \begin{columns}
     \begin{column}{0.5\textwidth}
-          \begin{block}{A normal block}
-              \begin{tikzpicture}[scale=2.6]
-                    \foreach \x in {0,60,...,300} {
-                        \draw[fill] (\x:1 cm) -- (\x + 60:1 cm);
-                        }
-                    \draw[fill] (0,0) circle (1pt);
-              \end{tikzpicture}
+          \begin{block}{Including Graphics}
+              \includegraphics[width=1\textwidth]{test}
           \end{block} 
     \end{column}
-    \begin{column}{0.5\textwidth}  %%<--- here
-        \begin{exampleblock}{Example block}
-            \begin{tikzpicture}[scale=1.35]
-                    \draw[draw] (4,4) -- (3,3.5) -- (1,3.5) -- (0,4) 
-                                -- (1,3) -- (2,1) -- (3,3) -- cycle;
-                    \draw[dotted] (1,3.5) -- (3,2.5);
-                    \draw[dotted] (3,3) -- (1,1);
-                    \draw[dotted] (1,3) -- (3,1);
-                    \draw[dotted] (3,3.5) -- (1,2.5);
-            \end{tikzpicture}
+    \begin{column}{0.5\textwidth}%
+        \begin{exampleblock}{Tikz Example}
+          \vspace{2mm}
+          \begin{tikzpicture}[scale=0.55,
+              state_style/.style={draw=black, shape=circle, minimum size=0.7cm},%inner sep = 0.5ex
+              base_edge_style/.style={->, shorten >=1ex, shorten <=1ex},
+              curved_style/.style={base_edge_style, bend right, bend angle=60}]
+            \def\l{8}
+            \node[state_style] at (0,0) (init) {$s_0$};
+            \node[state_style] at (\l,0) (goal) {$s_G$};
+            \node[state_style] at (\l/3,0) (forw) {$u$};
+            \node[state_style] at (\l/3*2,0) (backw) {$v$};
+            \draw[curved_style,<->] (init) to node[midway, fill=block body example.bg] {$C^*$} (goal);
+            \draw[base_edge_style] (init) -- (forw);
+            \draw[base_edge_style] (goal) -- (backw);
+          \end{tikzpicture}
         \end{exampleblock} 
     \end{column}
     \end{columns}
 \end{frame}
 
-%-------------Section::Two-----------------%
-\section{Second Section}
-\subsection*{Hidden Section}%Bullet point, but not in navigation
+\subsection{Algorithm}
+%-------------Frame::Algorithm-----------------%
+\begin{frame}{Algorithm}
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\caption{Algorithm Title}
+\State Put $s_0$ in $Open_F$ and $s_G$ in $Open_B$
+\While{$Open_F$ and $Open_B$ are not empty}
+    \State Among $u \in Open_F$ and $v \in Open_B$
+    \State Select the pair $(u,v)$ with lowest $lb(u,v)$
+    \If{$lb(u,v) \geq cost(U)$}
+        \State \Return $U$
+    \EndIf
+    \State Expand both $u$ and $v$
+    \If{new path from $s_0$ to $s_G$ is found}
+        \State Update $U$ if new path is better than previous
+    \EndIf
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+\end{frame}
 
+
+\subsection*{Hidden Section}%Bullet point, but not in navigation
 %-------------Frame::Proof-----------------%
 \begin{frame}{Some Proof}
   \begin{theorem}
@@ -151,15 +228,20 @@
   \beamertemplatearticlebibitems
   % Followed by interesting articles. Keep the list short. 
 
-  \bibitem{stewart1994}
-    I. Stewart.
-    \newblock How Many Guards in the Gallery?
-    \newblock {\em Scientific American 270}, no. 5 (1994): 118-20. 
+  \bibitem{chen2017nbs}
+    J. Chen, R. C. Holte, S. Zilles, N. Sturtevant
+    \newblock Front-to-end bidirectional heuristic search with near-optimal node expansions.
+    \newblock {\em IJCAI 2017}, pages: 489-495, AAAI Press. 
+    
+  \bibitem{eckerle2017sufficient}
+    J. Eckerle, J. Chen, R. C. Holte, S. Zilles
+    \newblock Sufficient conditions for node expansion in bidirectional heuristic search.
+    \newblock {\em ICAPS 2017}, pages: 79-87, AAAI Press.  
   \end{thebibliography}
 \end{frame}
 
 \begin{frame}
-    \begin{block}{Some equation}
+    \begin{block}{Just an equation}
         \begin{equation}
             \textsf{log}^*\ n=\left\{
                 \begin{array}{ll}

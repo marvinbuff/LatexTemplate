@@ -5,3 +5,4 @@ A repository for different latex templates.
 - Thesis
 - Exercise Sheet
 - Beamer
+- Snippets
