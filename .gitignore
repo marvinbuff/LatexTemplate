@@ -4,6 +4,8 @@
 *.log
 *.out
 *.toc
+*.bbl
+*.blg
 
 ## Compiled files
 *.pdf
@@ -14,6 +16,9 @@
 
 ## nomencl
 *.nlo
+
+## todo-package
+*.tdo
 
 ## Beamer
 *.nav

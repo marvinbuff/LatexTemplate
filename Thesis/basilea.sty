@@ -151,8 +151,9 @@
 \renewcommand*{\cftappendixname}{\iflanguage{english}{Appendix}{Anhang}\space}
 
 % definition of bibliography
-\newcommand*{\thesisbib}{\cleardoublepage\renewcommand*{\contentsname}{\iflanguage{english}{Bibliography}{Literaturverzeichnis}} \createplainmark{bib}{both}{\iflanguage{english}{Bibliography}{Literaturverzeichnis}}\bibliographystyle{thesis}\bibliography{thesis}}
-\usepackage[square, numbers, comma, sort&compress]{natbib}
+\newcommand*{\thesisbib}{\cleardoublepage\renewcommand*{\contentsname}{\iflanguage{english}{Bibliography}{Literaturverzeichnis}} \createplainmark{bib}{both}{\iflanguage{english}{Bibliography}{Literaturverzeichnis}}\bibliographystyle{apalike}\bibliography{thesis}}
+\usepackage[square, semicolon, sort&compress]{natbib}
+\setcitestyle{aysep={,}}
 
 % document structure
 \newcommand*{\thesisfront}{\frontmatter \let\cleardoublepage\clearpage }

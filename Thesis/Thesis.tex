@@ -6,80 +6,83 @@
 \usepackage{basilea}
 
 %% ---------------------------------------------------------------
-%  Imports
+%  -------------------------- Imports ----------------------------
 \usepackage{algorithm}
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
-\usepackage{tikz}
-\usepackage{longtable}
+
+\usepackage{longtable} % For multiple paged tables
+\usepackage{multirow} % For multirow command
+\usepackage{booktabs} % For fancy table lines
+
 \usepackage{placeins}
 \usepackage[width=.75\textwidth]{caption}
 
+\usepackage{todonotes}
+\presetkeys{todonotes}{fancyline, color=blue!30, inline}{}
+
+\usepackage{tikz}
 \usetikzlibrary{positioning,fit,shapes.geometric,backgrounds}
 
-% Custom Makros
-\newcommand{\tup}[2]{\ensuremath{\langle #1, #2 \rangle}}
-\newcommand{\forceindent}{\leavevmode{\parindent=1em\indent}}
+%  -------------------------- Settings ---------------------------
 
-% This command is used to include figures.
-\newcommand{\fig}[2]{%
-\begin{figure}[ht] 
-    \centering
-    \resizebox{0.8\textwidth}{!}{%
-        \input{./Figures/tikz/#1.tex}
-    }
-    \caption{#2}
-    \label{fig:#1}
-\end{figure}
-}
+% Changes emph to bold in theorems.
+\newtheoremstyle{break}
+    {\topsep}{\topsep}%
+    {\itshape}{}%
+    {\bfseries}{}%
+    {\newline}{}%
+\renewcommand\eminnershape{\itshape\bfseries}
 
-% The following are style definitions for tikz
-\tikzstyle{base node} = [draw, inner sep=0.5pt, outer sep=0.2pt, draw=black, text=black]
-\tikzstyle{node} = [base node, circle, minimum size=20pt]
-\tikzstyle{goal} = [node, double, double distance=1.0pt]
-\tikzstyle{start} = [base node, inner sep=6pt]
-\tikzstyle{arrow} = [->]
-% End of style definitions
 
-% Math Commands
+%  --------------------- Custom Makros ---------------------------
+\newcommand{\tup}[2]{\ensuremath{\langle #1, #2 \rangle}}     % Tuple command
+\newcommand{\forceindent}{\leavevmode{\parindent=1em\indent}} % For indentation
+\newcommand{\mybreak}{\medbreak \forceindent}                 % To make a break between paragraphs
+\newcommand{\apply}[1]{[\![#1]\!]}                            % Apply operator
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}         % Increase gap in table
+
+
+%  ---------------------- Math Commands --------------------------
+\DeclareMathOperator{\eff}{\mathit{eff}}
 \DeclareMathOperator{\pre}{\mathit{pre}}
 
 
 %% ----------------------------------------------------------------
+%  ---------------------- Information -----------------------------
 
-\title				{Solving Delete-Relaxed Planning Tasks by Using Cut Sets}
-\thesistype			{Bachelor Thesis}
+\title				{\texttt{NBS} applied to Planning}
+\thesistype			{Master Thesis Thesis}
 
 \department 		{Department of Mathematics and Computer Science}
 \faculty			{Natural Science Faculty of the University of Basel}
-\research		{Artificial Intelligence \\ http://ai.cs.unibas.ch}
+\research		    {Artificial Intelligence \\ http://ai.cs.unibas.ch}
 
-\supervisor  		{Dr. Thomas Keller and Cedric Geissmann}
-\examiner    		{Prof. Dr. Malte Helmert}
+\supervisor  		{Cedric Geissmann}
+\examiner    		{Dr. Gabriele Röger}
 
 \authors     		{Marvin Buff}
 \email				{marvin.buff@unibas.ch}
 \immatriculnr		{2014-054-191}
 
-\date				{13/06/2017}
+\date				{05/02/2019}
 
 \ulogo				{Template/logo-en}
 
 
 %% ----------------------------------------------------------------
+%  ---------------------- Start Document --------------------------
 \begin{document}
 
-% \selectlanguage{ngerman}
-\selectlanguage{english}
+\selectlanguage{english}%{ngerman}
 
 
 %% ----------------------------------------------------------------
-%  Commands
+%  ------------------- Document Settings --------------------------
 
-\def\someCommand#1#2{Args are #1 and #2}
-
-\newtheorem{bgDef}{Definition} %to use in definitions
-\nocite{*}
+\theoremstyle{break} % Set default theorem style.
+\newtheorem{bgDef}{Definition} % To use definitions.
+%\nocite{*}
 
 \thesisfront
 \maketitle
@@ -102,9 +105,11 @@
 %% ----------------------------------------------------------------
 \thesisappendix
 \thesisbib
-%\begin{appendices}
-%	\input{./Back/AppendixResults}
-%\end{appendices}
+\begin{appendices}
+	\input{./Back/AppendixA}
+	\listoftodos
+	%\input{./Back/AppendixB}
+\end{appendices}
 %% ----------------------------------------------------------------
 \thesisback
 \input{./Back/DeclarationOfAuthorship}

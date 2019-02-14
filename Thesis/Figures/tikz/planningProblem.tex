@@ -1,0 +1,26 @@
+\begin{tikzpicture}[shorten >=1pt, auto, node distance=3cm,
+   base_node_style/.style={draw, inner sep=0.5pt, outer sep=0.2pt, draw=black, text=black},
+   node_style/.style={base_node_style, circle, minimum size=20pt},
+   edge_style/.style={->,draw=black},
+   goal_style/.style={node_style,double, double distance=1.0pt}]
+   
+    \node[] (s) at (-1,0) {};
+    \node[node_style] (A) at (0,0) {A};
+    \node[node_style] (B) at (1,1) {B};
+    \node[node_style] (C) at (1,-1) {C};
+    \node[node_style] (D) at (2,0) {D};
+    \node[node_style] (E) at (3,-1) {E};
+    \node[goal_style] (F) at (4,0) {F};
+
+    \path [edge_style, ->](s) edge (A);
+    \path [edge_style](A) edge node {$1$} (B);
+    \path [edge_style](A) edge node {$1$} (C);
+    \path [edge_style](A) edge node {$2$} (D);
+    \path [edge_style](D) edge node {$2$} (F);
+    \path [edge_style](C) edge node {$1$} (E);
+    \path [edge_style](E) edge node {$1$} (F);
+\end{tikzpicture}
+
+
+
+
