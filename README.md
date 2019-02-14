@@ -5,4 +5,7 @@ A repository for different latex templates.
 - Thesis
 - Exercise Sheet
 - Beamer
-- Snippets
+
+## Todo
+- Add exam template.
+- Add snippet templates for easy reference.
