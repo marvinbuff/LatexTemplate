@@ -1,5 +1,5 @@
 # LatexTemplate
-A repository for different latex templates.
+A collection of various latex templates.
 
 ## Templates
 - Thesis
