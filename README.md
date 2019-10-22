@@ -9,3 +9,4 @@ A collection of various latex templates.
 ## Todo
 - Add exam template.
 - Add snippet templates for easy reference.
+- Add make files to run from linux without gui
